@@ -60,7 +60,7 @@ Please refer to [INSTALL.md](readme/INSTALL.md) for installation instructions.
 We support demo for image/ image folder, video, and webcam. 
 
 First, download the models (By default, [ctdet_coco_dla_2x](https://drive.google.com/open?id=1pl_-ael8wERdUREEnaIfqOV_VF2bEVRT) for detection and 
-[ctdet_coco_dla_2x](https://drive.google.com/open?id=1jIfK9EyqzNcupxGsp3YRnEiewrIG4_Ma) for human pose estimation) 
+[multi_pose_dla_3x](https://drive.google.com/open?id=1PO1Ax_GDtjiemEmDVD7oPWwqQkUu28PI) for human pose estimation) 
 from the [Model zoo](readme/MODEL_ZOO.md) and put them if `CenterNet_ROOT/models/`.
 
 For object detection on images/ video, run:
@@ -87,7 +87,8 @@ The result for the example images should look like:
 
 <p align="center">  <img src='readme/pose1.png' align="center" height="200px"> <img src='readme/pose2.png' align="center" height="200px"> <img src='readme/pose3.png' align="center" height="200px">  </p>
 
-You can add `--debug 2` to each commend to visualize the heatmap outputs.
+You can add `--debug 2` to visualize the heatmap outputs.
+You can add `--flip_test` for flip test.
 
 To use this CenterNet in your own project, you can 
 

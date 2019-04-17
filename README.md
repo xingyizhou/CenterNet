@@ -3,7 +3,7 @@ Object detection, 3D detection, and pose estimation using center point detection
 ![](readme/fig2.png)
 > [**Objects as Points**](https://arxiv.org/abs/xxxx.xxxxx),            
 > Xingyi Zhou, Dequan Wang, Philipp Kr&auml;henb&uuml;hl,        
-> *arXiv technical report (arXiv xxxx.xxxxx)*         
+> *arXiv technical report ([arXiv 1904.07850](http://arxiv.org/abs/1904.07850))*         
 
 
 Contact: [zhouxy@cs.utexas.edu](mailto:zhouxy@cs.utexas.edu). Any questions or discussions are welcomed! 
@@ -131,6 +131,6 @@ If you find this project useful for your research, please use the following BibT
     @inproceedings{zhou2019objects,
       title={Objects as Points},
       author={Zhou, Xingyi and Wang, Dequan and Kr{\"a}henb{\"u}hl, Philipp},
-      booktitle={arXiv preprint arXiv:xxxx.xxxxx},
+      booktitle={arXiv preprint arXiv:1904.07850},
       year={2019}
     }

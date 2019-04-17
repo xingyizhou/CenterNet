@@ -1,7 +1,7 @@
 # Objects as Points
 Object detection, 3D detection, and pose estimation using center point detection:
 ![](readme/fig2.png)
-> [**Objects as Points**](https://arxiv.org/abs/xxxx.xxxxx),            
+> [**Objects as Points**](http://arxiv.org/abs/1904.07850),            
 > Xingyi Zhou, Dequan Wang, Philipp Kr&auml;henb&uuml;hl,        
 > *arXiv technical report ([arXiv 1904.07850](http://arxiv.org/abs/1904.07850))*         
 
@@ -81,7 +81,7 @@ python demo.py ctdet --demo webcam --load_model ../models/ctdet_coco_dla_2x.pth
 Similarly, for human pose estimation, run:
 
 ~~~
-python demo.py multi_hp --demo /path/to/image/or/folder/or/video/or/webcam --load_model ../models/multi_pose_dla_3x.pth
+python demo.py multi_pose --demo /path/to/image/or/folder/or/video/or/webcam --load_model ../models/multi_pose_dla_3x.pth
 ~~~
 The result for the example images should look like:
 

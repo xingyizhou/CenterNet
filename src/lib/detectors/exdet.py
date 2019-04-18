@@ -46,7 +46,7 @@ class ExdetDetector(BaseDetector):
                       center_thresh=self.opt.center_thresh,
                       aggr_weight=self.opt.aggr_weight)
       else:
-        dets = self.decode(t_heat, l_heat, b_heat, r_heat, c_heat, K=opt.K,
+        dets = self.decode(t_heat, l_heat, b_heat, r_heat, c_heat, K=self.opt.K,
                       scores_thresh=self.opt.scores_thresh,
                       center_thresh=self.opt.center_thresh,
                       aggr_weight=self.opt.aggr_weight)

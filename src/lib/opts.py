@@ -273,7 +273,8 @@ class opts(object):
     opt.exp_dir = os.path.join(opt.root_dir, 'exp', opt.task)
     opt.save_dir = os.path.join(opt.exp_dir, opt.exp_id)
     opt.debug_dir = os.path.join(opt.save_dir, 'debug')
-
+    print('The output will be saved to ', opt.save_dir)
+    
     if opt.resume and opt.load_model == '':
       model_path = opt.save_dir[:-4] if opt.save_dir.endswith('TEST') \
                   else opt.save_dir
@@ -354,7 +355,7 @@ class opts(object):
       def __init__(self, entries):
         for k, v in entries.items():
           self.__setattr__(k, v)
-    opt = self.parse()
+    opt = self.parse(args)
     dataset = Struct(default_dataset_info[opt.task])
     opt.dataset = dataset.dataset
     opt = self.update_dataset_info_and_set_heads(opt, dataset)

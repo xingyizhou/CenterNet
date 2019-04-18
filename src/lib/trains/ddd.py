@@ -77,7 +77,7 @@ class DddTrainer(BaseTrainer):
       opt = self.opt
       wh = output['wh'] if opt.reg_bbox else None
       reg = output['reg'] if opt.reg_offset else None
-      dets = ctadd_decode(output['hm'], output['rot'], output['dep'],
+      dets = ddd_decode(output['hm'], output['rot'], output['dep'],
                           output['dim'], wh=wh, reg=reg, K=opt.K)
 
       # x, y, score, r1-r8, depth, dim1-dim3, cls
@@ -86,10 +86,10 @@ class DddTrainer(BaseTrainer):
       # x, y, score, rot, depth, dim1, dim2, dim3
       # if opt.dataset == 'gta':
       #   dets[:, 12:15] /= 3
-      dets_pred = ctadd_post_process(
+      dets_pred = ddd_post_process(
         dets.copy(), batch['meta']['c'].detach().numpy(), 
         batch['meta']['s'].detach().numpy(), calib, opt)
-      dets_gt = ctadd_post_process(
+      dets_gt = ddd_post_process(
         batch['meta']['gt_det'].detach().numpy().copy(),
         batch['meta']['c'].detach().numpy(), 
         batch['meta']['s'].detach().numpy(), calib, opt)
@@ -138,14 +138,14 @@ class DddTrainer(BaseTrainer):
     opt = self.opt
     wh = output['wh'] if opt.reg_bbox else None
     reg = output['reg'] if opt.reg_offset else None
-    dets = ctadd_decode(output['hm'], output['rot'], output['dep'],
+    dets = ddd_decode(output['hm'], output['rot'], output['dep'],
                         output['dim'], wh=wh, reg=reg, K=opt.K)
 
     # x, y, score, r1-r8, depth, dim1-dim3, cls
     dets = dets.detach().cpu().numpy().reshape(1, -1, dets.shape[2])
     calib = batch['meta']['calib'].detach().numpy()
     # x, y, score, rot, depth, dim1, dim2, dim3
-    dets_pred = ctadd_post_process(
+    dets_pred = ddd_post_process(
       dets.copy(), batch['meta']['c'].detach().numpy(), 
       batch['meta']['s'].detach().numpy(), calib, opt)
     img_id = batch['meta']['img_id'].detach().numpy()[0]

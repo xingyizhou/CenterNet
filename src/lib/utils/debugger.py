@@ -222,16 +222,16 @@ class Debugger(object):
     else:
       self.ax = None
       nImgs = len(self.imgs)
-      fig=plt.figure(figsize=(nImgs * 10,10))
+      fig=self.plt.figure(figsize=(nImgs * 10,10))
       nCols = nImgs
       nRows = nImgs // nCols
       for i, (k, v) in enumerate(self.imgs.items()):
         fig.add_subplot(1, nImgs, i + 1)
         if len(v.shape) == 3:
-          plt.imshow(cv2.cvtColor(v, cv2.COLOR_BGR2RGB))
+          self.plt.imshow(cv2.cvtColor(v, cv2.COLOR_BGR2RGB))
         else:
-          plt.imshow(v)
-      plt.show()
+          self.plt.imshow(v)
+      self.plt.show()
 
   def save_img(self, imgId='default', path='./cache/debug/'):
     cv2.imwrite(path + '{}.png'.format(imgId), self.imgs[imgId])

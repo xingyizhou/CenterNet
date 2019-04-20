@@ -21,7 +21,7 @@ from utils.blob import im_list_to_blob
 
 from model.config import cfg, get_output_dir
 from model.bbox_transform import clip_boxes, bbox_transform_inv
-# from model.nms_wrapper import nms
+from model.nms_wrapper import nms
 
 def _get_image_blob(im):
   """Converts an image into a network input.

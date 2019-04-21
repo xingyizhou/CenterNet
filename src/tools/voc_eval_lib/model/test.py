@@ -21,7 +21,8 @@ from utils.blob import im_list_to_blob
 
 from model.config import cfg, get_output_dir
 from model.bbox_transform import clip_boxes, bbox_transform_inv
-# from model.nms_wrapper import nms
+# from model.nms_wrapper import nms  # need to compile cython nms before import nms
+nms = None  # not needed in pascal evaluation
 
 def _get_image_blob(im):
   """Converts an image into a network input.
@@ -190,4 +191,3 @@ def test_net(sess, net, imdb, weights_filename, max_per_image=100, thresh=0.):
 
   print('Evaluating detections')
   imdb.evaluate_detections(all_boxes, output_dir)
-

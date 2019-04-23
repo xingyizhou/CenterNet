@@ -61,9 +61,9 @@ class PascalVOC(data.Dataset):
       img_id = self.images[i]
       for j in range(1, self.num_classes + 1):
         if isinstance(all_bboxes[img_id][j], np.ndarray):
-          detections[j][i] = all_bboxes[img_id][j].tolist()
+          detections[j][img_id] = all_bboxes[img_id][j].tolist()
         else:
-          detections[j][i] = all_bboxes[img_id][j]
+          detections[j][img_id] = all_bboxes[img_id][j]
     return detections
 
   def __len__(self):

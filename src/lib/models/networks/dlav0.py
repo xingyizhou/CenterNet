@@ -532,7 +532,7 @@ def fill_fc_weights(layers):
 
 class DLASeg(nn.Module):
     def __init__(self, base_name, heads,
-                 pretrained=True, down_ratio=4, add_conv=256):
+                 pretrained=True, down_ratio=4, head_conv=256):
         super(DLASeg, self).__init__()
         assert down_ratio in [2, 4, 8, 16]
         self.heads = heads
@@ -551,12 +551,12 @@ class DLASeg(nn.Module):
 
         for head in self.heads:
             classes = self.heads[head]
-            if add_conv > 0:
+            if head_conv > 0:
                 fc = nn.Sequential(
-                  nn.Conv2d(channels[self.first_level], add_conv,
+                  nn.Conv2d(channels[self.first_level], head_conv,
                     kernel_size=3, padding=1, bias=True),
                   nn.ReLU(inplace=True),
-                  nn.Conv2d(add_conv, classes, 
+                  nn.Conv2d(head_conv, classes, 
                     kernel_size=1, stride=1, 
                     padding=0, bias=True))
                 if 'hm' in head:
@@ -639,9 +639,9 @@ def dla169up(classes, pretrained_base=None, **kwargs):
     return model
 '''
 
-def get_pose_net(heads, down_ratio=4, add_conv=256):
+def get_pose_net(heads, down_ratio=4, head_conv=256):
   model = DLASeg('dla34', heads,
                  pretrained=True,
                  down_ratio=down_ratio,
-                 add_conv=add_conv)
+                 head_conv=head_conv)
   return model

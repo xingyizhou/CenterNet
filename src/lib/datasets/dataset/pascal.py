@@ -46,7 +46,7 @@ class PascalVOC(data.Dataset):
 
     print('==> initializing pascal {} data.'.format(_ann_name[split]))
     self.coco = coco.COCO(self.annot_path)
-    self.images = self.coco.getImgIds()
+    self.images = sorted(self.coco.getImgIds())
     self.num_samples = len(self.images)
 
     print('Loaded {} {} samples'.format(split, self.num_samples))
@@ -61,9 +61,9 @@ class PascalVOC(data.Dataset):
       img_id = self.images[i]
       for j in range(1, self.num_classes + 1):
         if isinstance(all_bboxes[img_id][j], np.ndarray):
-          detections[j][img_id] = all_bboxes[img_id][j].tolist()
+          detections[j][i] = all_bboxes[img_id][j].tolist()
         else:
-          detections[j][img_id] = all_bboxes[img_id][j]
+          detections[j][i] = all_bboxes[img_id][j]
     return detections
 
   def __len__(self):

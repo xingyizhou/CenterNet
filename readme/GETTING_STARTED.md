@@ -50,12 +50,10 @@ And you can change to other network architectures and resolutions by specifying 
 
 ### KITTI
 
-To evaluate the kitti dataset, first clone a third-party evaluation tool (if you haven't added `--recursive` when cloning this repo) and compile:
+To evaluate the kitti dataset, first compile the evaluation tool (from [here](https://github.com/prclibo/kitti_eval)):
 
 ~~~
-cd CenterNet_ROOT/src/tools/
-git clone https://github.com/prclibo/kitti_eval
-cd kitti_eval
+cd CenterNet_ROOT/src/tools/kitti_eval
 g++ -o evaluate_object_3d_offline evaluate_object_3d_offline.cpp -O3
 ~~~
 

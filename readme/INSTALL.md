@@ -47,7 +47,7 @@ After install Anaconda:
 
     ~~~
     CenterNet_ROOT=/path/to/clone/CenterNet
-    git clone --recursive https://github.com/xingyizhou/CenterNet $CenterNet_ROOT
+    git clone https://github.com/xingyizhou/CenterNet $CenterNet_ROOT
     ~~~
 
 

@@ -1,4 +1,0 @@
-[submodule "kitti_eval"]
-	path = src/tools/kitti_eval
-	url = https://github.com/prclibo/kitti_eval.git
-	branch = master

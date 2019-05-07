@@ -119,6 +119,11 @@ We provide scripts for all the experiments in the [experiments](experiments) fol
 
 If you are interested in training CenterNet in a new dataset, use CenterNet in a new task, or use a new network architecture for CenterNet, please refer to [DEVELOP.md](readme/DEVELOP.md). Also feel free to send us emails for discussions or suggestions.
 
+## Third-party implementation
+
+- Keras: [keras-centernet](https://github.com/see--/keras-centernet) from [see--](https://github.com/see--).
+
+
 ## License
 
 CenterNet itself is released under the MIT License (refer to the LICENSE file for details).

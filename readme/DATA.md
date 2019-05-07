@@ -91,6 +91,13 @@ If you want to reproduce the results in the paper for benchmark evaluation and t
 
 - Run `python convert_kitti_to_coco.py` in `tools` to convert the annotation into COCO format. You can set `DEBUG=True` in `line 5` to visualize the annotation.
 
+- Link image folder
+
+  ~~~
+  cd ${CenterNet_ROOT}/data/kitti/
+  mkdir images
+  ln -s training/image_2 images/trainval
+  ~~~
 
 - The data structure should look like:
 

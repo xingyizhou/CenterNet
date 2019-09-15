@@ -38,7 +38,7 @@ If you want to reproduce the results in the paper for benchmark evaluation and t
 
     ~~~
     cd $CenterNet_ROOT/tools/
-    bash download_pascal_voc.sh
+    bash get_pascal_voc.sh
     ~~~
 - The above script includes:
     - Download, unzip, and move Pascal VOC images from the [VOC website](http://host.robots.ox.ac.uk/pascal/VOC/). 

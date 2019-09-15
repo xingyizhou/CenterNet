@@ -8,7 +8,11 @@ from progress.bar import Bar
 import time
 import torch
 
-from external.nms import soft_nms_39
+try:
+  from external.nms import soft_nms_39
+except:
+  print('NMS not imported! If you need it,'
+        ' do \n cd $CenterNet_ROOT/src/lib/external \n make')
 from models.decode import multi_pose_decode
 from models.utils import flip_tensor, flip_lr_off, flip_lr
 from utils.image import get_affine_transform

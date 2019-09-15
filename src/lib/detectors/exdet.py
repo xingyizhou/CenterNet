@@ -12,7 +12,6 @@ from progress.bar import Bar
 import time
 import torch
 
-from external.nms import soft_nms
 from models.decode import exct_decode, agnex_ct_decode
 from models.utils import flip_tensor
 from utils.image import get_affine_transform, transform_preds

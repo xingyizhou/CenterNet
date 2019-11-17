@@ -1,6 +1,5 @@
-#install cocoapi
+#install coco api
 
-cd ../
 git clone https://github.com/cocodataset/cocoapi.git $COCOAPI
 cd cocoapi/PythonAPI
 make
@@ -11,7 +10,6 @@ cd ../../
 pip install -r requirements.txt
 
 
-#complie DCNv2
-cd lib/models/networks/DCNv2
+#install DCNv2
+cd src/lib/models/networks/DCNv2
 ./make.sh
-

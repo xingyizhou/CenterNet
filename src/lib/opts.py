@@ -98,6 +98,9 @@ class opts(object):
     self.parser.add_argument('--trainval', action='store_true',
                              help='include validation in training and '
                                   'test on test set')
+    self.parser.add_argument('--bucket_path', action='',
+                             help='path to bucket location for saving weights')
+
 
     # test
     self.parser.add_argument('--flip_test', action='store_true',

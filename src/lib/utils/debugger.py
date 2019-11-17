@@ -62,6 +62,10 @@ class Debugger(object):
       self.focal_length = 721.5377
       self.W = 1242
       self.H = 375
+    elif num_classes ==2 or dataset = 'mhp_hf':
+      self.names = mhp_hf_class_name
+    elif num_classes ==58 or dataset =='mhp':
+      self.names = mhp_class_name
     num_classes = len(self.names)
     self.down_ratio=down_ratio
     # for bird view
@@ -455,6 +459,18 @@ coco_class_name = [
      'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
      'scissors', 'teddy bear', 'hair drier', 'toothbrush'
 ]
+
+mhp_class_name = [
+      "cap/hat","helmet","face","hair","left-arm","right-arm","left-hand","right-hand","protector","bikini-bra",
+          "jacket-windbreaker-hoodie","t-shirt","polo-shirt","sweater","sin-glet","torso-skin","pants",
+          "shorts-swim-shorts","skirt","stock-ings","socks","left-boot","right-boot","left-shoe",
+          "right-shoe","left-highheel","right-highheel","left-sandal","right-sandal","left-leg","right-leg"
+          ,"left-foot","right-foot","coat","dress","robe","jumpsuits","other-full-body-clothes","headwear",
+          "backpack","ball","bats","belt","bottle","carrybag","cases","sunglasses","eyewear","gloves","scarf",
+          "umbrella","wallet-purse","watch","wristband","tie","other-accessaries","other-upper-body-clothes",
+          "other-lower-body-clothes"]
+
+mhp_hf_class_name =['human','face']
 
 color_list = np.array(
         [

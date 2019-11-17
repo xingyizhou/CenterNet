@@ -13,7 +13,7 @@ class opts(object):
     self.parser.add_argument('task', default='ctdet',
                              help='ctdet | ddd | multi_pose | exdet')
     self.parser.add_argument('--dataset', default='coco',
-                             help='coco | kitti | coco_hp | pascal | mhp')
+                             help='coco | kitti | coco_hp | pascal | mhp | mhp_hf')
 
     self.parser.add_argument('--exp_id', default='default')
     self.parser.add_argument('--test', action='store_true')
@@ -99,7 +99,7 @@ class opts(object):
                              help='include validation in training and '
                                   'test on test set')
     self.parser.add_argument('--bucket_path', default='',
-                             help='path to bucket location for saving weights')
+                             help='path to cloud bucket location for saving weights')
 
 
     # test

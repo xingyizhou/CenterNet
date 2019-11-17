@@ -13,7 +13,8 @@ class opts(object):
     self.parser.add_argument('task', default='ctdet',
                              help='ctdet | ddd | multi_pose | exdet')
     self.parser.add_argument('--dataset', default='coco',
-                             help='coco | kitti | coco_hp | pascal')
+                             help='coco | kitti | coco_hp | pascal | mhp')
+
     self.parser.add_argument('--exp_id', default='default')
     self.parser.add_argument('--test', action='store_true')
     self.parser.add_argument('--debug', type=int, default=0,
@@ -335,9 +336,22 @@ class opts(object):
 
   def init(self, args=''):
     default_dataset_info = {
-      'ctdet': {'default_resolution': [512, 512], 'num_classes': 80, 
-                'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
-                'dataset': 'coco'},
+      'ctdet': {'coco' : 
+                    {'default_resolution': [512, 512], 'num_classes': 80, 
+                     'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
+                     'dataset': 'coco'},
+
+                'mhp_hf' :
+                     {'default_resolution': [512, 512], 'num_classes': 2, 
+                      'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
+                      'dataset': 'mhp_hf'},
+
+                'mhp' : 
+                     {'default_resolution': [512, 512], 'num_classes': 2, 
+                      'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
+                      'dataset': 'mhp'} 
+               },
+
       'exdet': {'default_resolution': [512, 512], 'num_classes': 80, 
                 'mean': [0.408, 0.447, 0.470], 'std': [0.289, 0.274, 0.278],
                 'dataset': 'coco'},
@@ -355,8 +369,9 @@ class opts(object):
       def __init__(self, entries):
         for k, v in entries.items():
           self.__setattr__(k, v)
+
     opt = self.parse(args)
-    dataset = Struct(default_dataset_info[opt.task])
-    opt.dataset = dataset.dataset
+    dataset = Struct(default_dataset_info[opt.task][opt.dataset])
+    #opt.dataset = dataset.dataset
     opt = self.update_dataset_info_and_set_heads(opt, dataset)
     return opt

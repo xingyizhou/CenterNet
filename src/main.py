@@ -99,7 +99,7 @@ def main(opt):
       save_model(os.path.join(opt.save_dir, 'model_last.pth'), 
                  epoch, model, optimizer)
       if opt.bucket_path != "":
-          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_last.pth')
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_last.pth'))
 
     logger.write('\n')
     if epoch in opt.lr_step:

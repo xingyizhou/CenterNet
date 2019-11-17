@@ -8,6 +8,8 @@ from .sample.ctdet import CTDetDataset
 from .sample.multi_pose import MultiPoseDataset
 
 from .dataset.coco import COCO
+from .dataset.mhp_hf import HF
+from .dataset.mhp import MHP
 from .dataset.pascal import PascalVOC
 from .dataset.kitti import KITTI
 from .dataset.coco_hp import COCOHP
@@ -18,6 +20,8 @@ dataset_factory = {
   'pascal': PascalVOC,
   'kitti': KITTI,
   'coco_hp': COCOHP
+  'mhp_hf':HF
+  'mhp':MHP
 }
 
 _sample_factory = {

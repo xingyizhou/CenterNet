@@ -62,7 +62,7 @@ class Debugger(object):
       self.focal_length = 721.5377
       self.W = 1242
       self.H = 375
-    elif num_classes ==2 or dataset = 'mhp_hf':
+    elif num_classes ==2 or dataset == 'mhp_hf':
       self.names = mhp_hf_class_name
     elif num_classes ==58 or dataset =='mhp':
       self.names = mhp_class_name

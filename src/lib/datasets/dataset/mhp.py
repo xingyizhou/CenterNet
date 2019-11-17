@@ -10,7 +10,7 @@ import os
 
 import torch.utils.data as data
 
-class COCO(data.Dataset):
+class MHP(data.Dataset):
   num_classes = 58
   default_resolution = [512, 512]
   mean = np.array([0.40789654, 0.44719302, 0.47026115],
@@ -19,7 +19,7 @@ class COCO(data.Dataset):
                    dtype=np.float32).reshape(1, 1, 3)
 
   def __init__(self, opt, split):
-    super(COCO, self).__init__()
+    super(MHP, self).__init__()
     self.data_dir = os.path.join(opt.data_dir, 'coco')
     self.img_dir = os.path.join(self.data_dir, '{}2017'.format(split))
     if split == 'test':

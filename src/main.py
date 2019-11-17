@@ -81,7 +81,7 @@ def main(opt):
       save_model(os.path.join(opt.save_dir, 'model_{}.pth'.format(mark)), 
                  epoch, model, optimizer)
       if opt.bucket_path != "":
-          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_{}.pth'.format(mark))
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_{}.pth'.format(mark)))
 
       with torch.no_grad():
         log_dict_val, preds = trainer.val(epoch, val_loader)
@@ -93,7 +93,7 @@ def main(opt):
         save_model(os.path.join(opt.save_dir, 'model_best.pth'), 
                    epoch, model)
         if opt.bucket_path != "":
-          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_best.pth')
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_best.pth'))
 
     else:
       save_model(os.path.join(opt.save_dir, 'model_last.pth'), 
@@ -106,7 +106,7 @@ def main(opt):
       save_model(os.path.join(opt.save_dir, 'model_{}.pth'.format(epoch)), 
                  epoch, model, optimizer)
       if opt.bucket_path != "":
-          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_{}.pth'.format(epoch))
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_{}.pth'.format(epoch)))
 
       lr = opt.lr * (0.1 ** (opt.lr_step.index(epoch) + 1))
       print('Drop LR to', lr)

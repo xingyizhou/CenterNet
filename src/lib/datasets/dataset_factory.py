@@ -19,8 +19,8 @@ dataset_factory = {
   'coco': COCO,
   'pascal': PascalVOC,
   'kitti': KITTI,
-  'coco_hp': COCOHP
-  'mhp_hf':HF
+  'coco_hp': COCOHP,
+  'mhp_hf':HF,
   'mhp':MHP
 }
 

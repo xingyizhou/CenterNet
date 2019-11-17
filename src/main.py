@@ -15,6 +15,11 @@ from logger import Logger
 from datasets.dataset_factory import get_dataset
 from trains.train_factory import train_factory
 
+def save_to_bucket(bucket_path,model_path):
+  cmd = "gsutil cp {} {}".format(model_path,bucket_path)
+  d = os.system(cmd)
+  if d==0:
+    print("Model copied to bucket {}".format(bucket_path)) 
 
 def main(opt):
   torch.manual_seed(opt.seed)
@@ -75,6 +80,9 @@ def main(opt):
     if opt.val_intervals > 0 and epoch % opt.val_intervals == 0:
       save_model(os.path.join(opt.save_dir, 'model_{}.pth'.format(mark)), 
                  epoch, model, optimizer)
+      if opt.bucket_path != "":
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_{}.pth'.format(mark))
+
       with torch.no_grad():
         log_dict_val, preds = trainer.val(epoch, val_loader)
       for k, v in log_dict_val.items():
@@ -84,13 +92,22 @@ def main(opt):
         best = log_dict_val[opt.metric]
         save_model(os.path.join(opt.save_dir, 'model_best.pth'), 
                    epoch, model)
+        if opt.bucket_path != "":
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_best.pth')
+
     else:
       save_model(os.path.join(opt.save_dir, 'model_last.pth'), 
                  epoch, model, optimizer)
+      if opt.bucket_path != "":
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_last.pth')
+
     logger.write('\n')
     if epoch in opt.lr_step:
       save_model(os.path.join(opt.save_dir, 'model_{}.pth'.format(epoch)), 
                  epoch, model, optimizer)
+      if opt.bucket_path != "":
+          save_to_bucket(opt.bucket_path,os.path.join(opt.save_dir, 'model_{}.pth'.format(epoch))
+
       lr = opt.lr * (0.1 ** (opt.lr_step.index(epoch) + 1))
       print('Drop LR to', lr)
       for param_group in optimizer.param_groups:

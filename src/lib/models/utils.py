@@ -19,7 +19,7 @@ def _gather_feat(feat, ind, mask=None):
         feat = feat.view(-1, dim)
     return feat
 
-def _tranpose_and_gather_feat(feat, ind):
+def _transpose_and_gather_feat(feat, ind):
     feat = feat.permute(0, 2, 3, 1).contiguous()
     feat = feat.view(feat.size(0), -1, feat.size(3))
     feat = _gather_feat(feat, ind)

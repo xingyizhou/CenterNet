@@ -4,7 +4,7 @@ from __future__ import print_function
 
 import torch
 import torch.nn as nn
-from .utils import _gather_feat, _tranpose_and_gather_feat
+from .utils import _gather_feat, _transpose_and_gather_feat
 
 def _nms(heat, kernel=3):
     pad = (kernel - 1) // 2
@@ -213,13 +213,13 @@ def agnex_ct_decode(
 
     if t_regr is not None and l_regr is not None \
       and b_regr is not None and r_regr is not None:
-        t_regr = _tranpose_and_gather_feat(t_regr, t_inds)
+        t_regr = _transpose_and_gather_feat(t_regr, t_inds)
         t_regr = t_regr.view(batch, K, 1, 1, 1, 2)
-        l_regr = _tranpose_and_gather_feat(l_regr, l_inds)
+        l_regr = _transpose_and_gather_feat(l_regr, l_inds)
         l_regr = l_regr.view(batch, 1, K, 1, 1, 2)
-        b_regr = _tranpose_and_gather_feat(b_regr, b_inds)
+        b_regr = _transpose_and_gather_feat(b_regr, b_inds)
         b_regr = b_regr.view(batch, 1, 1, K, 1, 2)
-        r_regr = _tranpose_and_gather_feat(r_regr, r_inds)
+        r_regr = _transpose_and_gather_feat(r_regr, r_inds)
         r_regr = r_regr.view(batch, 1, 1, 1, K, 2)
 
         t_xs = t_xs + t_regr[..., 0]
@@ -365,13 +365,13 @@ def exct_decode(
 
     if t_regr is not None and l_regr is not None \
       and b_regr is not None and r_regr is not None:
-        t_regr = _tranpose_and_gather_feat(t_regr, t_inds)
+        t_regr = _transpose_and_gather_feat(t_regr, t_inds)
         t_regr = t_regr.view(batch, K, 1, 1, 1, 2)
-        l_regr = _tranpose_and_gather_feat(l_regr, l_inds)
+        l_regr = _transpose_and_gather_feat(l_regr, l_inds)
         l_regr = l_regr.view(batch, 1, K, 1, 1, 2)
-        b_regr = _tranpose_and_gather_feat(b_regr, b_inds)
+        b_regr = _transpose_and_gather_feat(b_regr, b_inds)
         b_regr = b_regr.view(batch, 1, 1, K, 1, 2)
-        r_regr = _tranpose_and_gather_feat(r_regr, r_inds)
+        r_regr = _transpose_and_gather_feat(r_regr, r_inds)
         r_regr = r_regr.view(batch, 1, 1, 1, K, 2)
 
         t_xs = t_xs + t_regr[..., 0]
@@ -431,7 +431,7 @@ def ddd_decode(heat, rot, depth, dim, wh=None, reg=None, K=40):
       
     scores, inds, clses, ys, xs = _topk(heat, K=K)
     if reg is not None:
-      reg = _tranpose_and_gather_feat(reg, inds)
+      reg = _transpose_and_gather_feat(reg, inds)
       reg = reg.view(batch, K, 2)
       xs = xs.view(batch, K, 1) + reg[:, :, 0:1]
       ys = ys.view(batch, K, 1) + reg[:, :, 1:2]
@@ -439,11 +439,11 @@ def ddd_decode(heat, rot, depth, dim, wh=None, reg=None, K=40):
       xs = xs.view(batch, K, 1) + 0.5
       ys = ys.view(batch, K, 1) + 0.5
       
-    rot = _tranpose_and_gather_feat(rot, inds)
+    rot = _transpose_and_gather_feat(rot, inds)
     rot = rot.view(batch, K, 8)
-    depth = _tranpose_and_gather_feat(depth, inds)
+    depth = _transpose_and_gather_feat(depth, inds)
     depth = depth.view(batch, K, 1)
-    dim = _tranpose_and_gather_feat(dim, inds)
+    dim = _transpose_and_gather_feat(dim, inds)
     dim = dim.view(batch, K, 3)
     clses  = clses.view(batch, K, 1).float()
     scores = scores.view(batch, K, 1)
@@ -451,7 +451,7 @@ def ddd_decode(heat, rot, depth, dim, wh=None, reg=None, K=40):
     ys = ys.view(batch, K, 1)
       
     if wh is not None:
-        wh = _tranpose_and_gather_feat(wh, inds)
+        wh = _transpose_and_gather_feat(wh, inds)
         wh = wh.view(batch, K, 2)
         detections = torch.cat(
             [xs, ys, scores, rot, depth, dim, wh, clses], dim=2)
@@ -470,14 +470,14 @@ def ctdet_decode(heat, wh, reg=None, cat_spec_wh=False, K=100):
       
     scores, inds, clses, ys, xs = _topk(heat, K=K)
     if reg is not None:
-      reg = _tranpose_and_gather_feat(reg, inds)
+      reg = _transpose_and_gather_feat(reg, inds)
       reg = reg.view(batch, K, 2)
       xs = xs.view(batch, K, 1) + reg[:, :, 0:1]
       ys = ys.view(batch, K, 1) + reg[:, :, 1:2]
     else:
       xs = xs.view(batch, K, 1) + 0.5
       ys = ys.view(batch, K, 1) + 0.5
-    wh = _tranpose_and_gather_feat(wh, inds)
+    wh = _transpose_and_gather_feat(wh, inds)
     if cat_spec_wh:
       wh = wh.view(batch, K, cat, 2)
       clses_ind = clses.view(batch, K, 1, 1).expand(batch, K, 1, 2).long()
@@ -503,19 +503,19 @@ def multi_pose_decode(
   heat = _nms(heat)
   scores, inds, clses, ys, xs = _topk(heat, K=K)
 
-  kps = _tranpose_and_gather_feat(kps, inds)
+  kps = _transpose_and_gather_feat(kps, inds)
   kps = kps.view(batch, K, num_joints * 2)
   kps[..., ::2] += xs.view(batch, K, 1).expand(batch, K, num_joints)
   kps[..., 1::2] += ys.view(batch, K, 1).expand(batch, K, num_joints)
   if reg is not None:
-    reg = _tranpose_and_gather_feat(reg, inds)
+    reg = _transpose_and_gather_feat(reg, inds)
     reg = reg.view(batch, K, 2)
     xs = xs.view(batch, K, 1) + reg[:, :, 0:1]
     ys = ys.view(batch, K, 1) + reg[:, :, 1:2]
   else:
     xs = xs.view(batch, K, 1) + 0.5
     ys = ys.view(batch, K, 1) + 0.5
-  wh = _tranpose_and_gather_feat(wh, inds)
+  wh = _transpose_and_gather_feat(wh, inds)
   wh = wh.view(batch, K, 2)
   clses  = clses.view(batch, K, 1).float()
   scores = scores.view(batch, K, 1)
@@ -532,7 +532,7 @@ def multi_pose_decode(
       reg_kps = kps.unsqueeze(3).expand(batch, num_joints, K, K, 2)
       hm_score, hm_inds, hm_ys, hm_xs = _topk_channel(hm_hp, K=K) # b x J x K
       if hp_offset is not None:
-          hp_offset = _tranpose_and_gather_feat(
+          hp_offset = _transpose_and_gather_feat(
               hp_offset, hm_inds.view(batch, -1))
           hp_offset = hp_offset.view(batch, num_joints, K, 2)
           hm_xs = hm_xs + hp_offset[:, :, :, 0]

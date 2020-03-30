@@ -1,3 +1,9 @@
+## Updated by Kausain
+```if centernet doesn't works do this ```
+1. nucc --version and nvidia-smi must show same cuda version i.e 10.2
+2. to make.sh the file given in DCVv2 clone the updated DCVv2 repo from git 
+3. make the file wth fresh conda environement dont use pipeline conda env from either GPU
+
 # Objects as Points
 Object detection, 3D detection, and pose estimation using center point detection:
 ![](readme/fig2.png)

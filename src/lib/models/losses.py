@@ -141,11 +141,13 @@ class RegL1Loss(nn.Module):
     super(RegL1Loss, self).__init__()
   
   def forward(self, output, mask, ind, target):
+    num = mask.float().sum()
     pred = _transpose_and_gather_feat(output, ind)
     mask = mask.unsqueeze(2).expand_as(pred).float()
+
     # loss = F.l1_loss(pred * mask, target * mask, reduction='elementwise_mean')
     loss = F.l1_loss(pred * mask, target * mask, size_average=False)
-    loss = loss / (mask.sum() + 1e-4)
+    loss = loss / (num + 1e-4)
     return loss
 
 class NormRegL1Loss(nn.Module):

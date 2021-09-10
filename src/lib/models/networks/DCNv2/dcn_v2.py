@@ -3,13 +3,56 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import division
 
-import torch
 import math
+import torch
 from torch import nn
+from torch.autograd import Function
 from torch.nn.modules.utils import _pair
+from torch.autograd.function import once_differentiable
 
-from .dcn_v2_func import DCNv2Function
-from .dcn_v2_func import DCNv2PoolingFunction
+import _ext as _backend
+
+
+class _DCNv2(Function):
+    @staticmethod
+    def forward(ctx, input, offset, mask, weight, bias,
+                stride, padding, dilation, deformable_groups):
+        ctx.stride = _pair(stride)
+        ctx.padding = _pair(padding)
+        ctx.dilation = _pair(dilation)
+        ctx.kernel_size = _pair(weight.shape[2:4])
+        ctx.deformable_groups = deformable_groups
+        output = _backend.dcn_v2_forward(input, weight, bias,
+                                         offset, mask,
+                                         ctx.kernel_size[0], ctx.kernel_size[1],
+                                         ctx.stride[0], ctx.stride[1],
+                                         ctx.padding[0], ctx.padding[1],
+                                         ctx.dilation[0], ctx.dilation[1],
+                                         ctx.deformable_groups)
+        ctx.save_for_backward(input, offset, mask, weight, bias)
+        return output
+
+    @staticmethod
+    @once_differentiable
+    def backward(ctx, grad_output):
+        input, offset, mask, weight, bias = ctx.saved_tensors
+        grad_input, grad_offset, grad_mask, grad_weight, grad_bias = \
+            _backend.dcn_v2_backward(input, weight,
+                                     bias,
+                                     offset, mask,
+                                     grad_output,
+                                     ctx.kernel_size[0], ctx.kernel_size[1],
+                                     ctx.stride[0], ctx.stride[1],
+                                     ctx.padding[0], ctx.padding[1],
+                                     ctx.dilation[0], ctx.dilation[1],
+                                     ctx.deformable_groups)
+
+        return grad_input, grad_offset, grad_mask, grad_weight, grad_bias,\
+            None, None, None, None,
+
+
+dcn_v2_conv = _DCNv2.apply
+
 
 class DCNv2(nn.Module):
 
@@ -19,12 +62,13 @@ class DCNv2(nn.Module):
         self.in_channels = in_channels
         self.out_channels = out_channels
         self.kernel_size = _pair(kernel_size)
-        self.stride = stride
-        self.padding = padding
-        self.dilation = dilation
+        self.stride = _pair(stride)
+        self.padding = _pair(padding)
+        self.dilation = _pair(dilation)
         self.deformable_groups = deformable_groups
 
-        self.weight = nn.Parameter(torch.Tensor(out_channels, in_channels, *self.kernel_size))
+        self.weight = nn.Parameter(torch.Tensor(
+            out_channels, in_channels, *self.kernel_size))
         self.bias = nn.Parameter(torch.Tensor(out_channels))
         self.reset_parameters()
 
@@ -37,8 +81,17 @@ class DCNv2(nn.Module):
         self.bias.data.zero_()
 
     def forward(self, input, offset, mask):
-        func = DCNv2Function(self.stride, self.padding, self.dilation, self.deformable_groups)
-        return func(input, offset, mask, self.weight, self.bias)
+        assert 2 * self.deformable_groups * self.kernel_size[0] * self.kernel_size[1] == \
+            offset.shape[1]
+        assert self.deformable_groups * self.kernel_size[0] * self.kernel_size[1] == \
+            mask.shape[1]
+        return dcn_v2_conv(input, offset, mask,
+                           self.weight,
+                           self.bias,
+                           self.stride,
+                           self.padding,
+                           self.dilation,
+                           self.deformable_groups)
 
 
 class DCN(DCNv2):
@@ -49,11 +102,12 @@ class DCN(DCNv2):
         super(DCN, self).__init__(in_channels, out_channels,
                                   kernel_size, stride, padding, dilation, deformable_groups)
 
+        channels_ = self.deformable_groups * 3 * self.kernel_size[0] * self.kernel_size[1]
         self.conv_offset_mask = nn.Conv2d(self.in_channels,
-                                          self.deformable_groups * 3 * self.kernel_size[0] * self.kernel_size[1],
+                                          channels_,
                                           kernel_size=self.kernel_size,
-                                          stride=(self.stride, self.stride),
-                                          padding=(self.padding, self.padding),
+                                          stride=self.stride,
+                                          padding=self.padding,
                                           bias=True)
         self.init_offset()
 
@@ -66,8 +120,68 @@ class DCN(DCNv2):
         o1, o2, mask = torch.chunk(out, 3, dim=1)
         offset = torch.cat((o1, o2), dim=1)
         mask = torch.sigmoid(mask)
-        func = DCNv2Function(self.stride, self.padding, self.dilation, self.deformable_groups)
-        return func(input, offset, mask, self.weight, self.bias)
+        return dcn_v2_conv(input, offset, mask,
+                           self.weight, self.bias,
+                           self.stride,
+                           self.padding,
+                           self.dilation,
+                           self.deformable_groups)
+
+
+
+class _DCNv2Pooling(Function):
+    @staticmethod
+    def forward(ctx, input, rois, offset,
+                spatial_scale,
+                pooled_size,
+                output_dim,
+                no_trans,
+                group_size=1,
+                part_size=None,
+                sample_per_part=4,
+                trans_std=.0):
+        ctx.spatial_scale = spatial_scale
+        ctx.no_trans = int(no_trans)
+        ctx.output_dim = output_dim
+        ctx.group_size = group_size
+        ctx.pooled_size = pooled_size
+        ctx.part_size = pooled_size if part_size is None else part_size
+        ctx.sample_per_part = sample_per_part
+        ctx.trans_std = trans_std
+
+        output, output_count = \
+            _backend.dcn_v2_psroi_pooling_forward(input, rois, offset,
+                                                  ctx.no_trans, ctx.spatial_scale,
+                                                  ctx.output_dim, ctx.group_size,
+                                                  ctx.pooled_size, ctx.part_size,
+                                                  ctx.sample_per_part, ctx.trans_std)
+        ctx.save_for_backward(input, rois, offset, output_count)
+        return output
+
+    @staticmethod
+    @once_differentiable
+    def backward(ctx, grad_output):
+        input, rois, offset, output_count = ctx.saved_tensors
+        grad_input, grad_offset = \
+            _backend.dcn_v2_psroi_pooling_backward(grad_output,
+                                                   input,
+                                                   rois,
+                                                   offset,
+                                                   output_count,
+                                                   ctx.no_trans,
+                                                   ctx.spatial_scale,
+                                                   ctx.output_dim,
+                                                   ctx.group_size,
+                                                   ctx.pooled_size,
+                                                   ctx.part_size,
+                                                   ctx.sample_per_part,
+                                                   ctx.trans_std)
+
+        return grad_input, None, grad_offset, \
+            None, None, None, None, None, None, None, None
+
+
+dcn_v2_pooling = _DCNv2Pooling.apply
 
 
 class DCNv2Pooling(nn.Module):
@@ -90,20 +204,21 @@ class DCNv2Pooling(nn.Module):
         self.part_size = pooled_size if part_size is None else part_size
         self.sample_per_part = sample_per_part
         self.trans_std = trans_std
-        self.func = DCNv2PoolingFunction(self.spatial_scale,
-                             self.pooled_size,
-                             self.output_dim,
-                             self.no_trans,
-                             self.group_size,
-                             self.part_size,
-                             self.sample_per_part,
-                             self.trans_std)
 
-    def forward(self, data, rois, offset):
-
+    def forward(self, input, rois, offset):
+        assert input.shape[1] == self.output_dim
         if self.no_trans:
-            offset = data.new()
-        return self.func(data, rois, offset)
+            offset = input.new()
+        return dcn_v2_pooling(input, rois, offset,
+                              self.spatial_scale,
+                              self.pooled_size,
+                              self.output_dim,
+                              self.no_trans,
+                              self.group_size,
+                              self.part_size,
+                              self.sample_per_part,
+                              self.trans_std)
+
 
 class DCNPooling(DCNv2Pooling):
 
@@ -129,43 +244,60 @@ class DCNPooling(DCNv2Pooling):
         self.deform_fc_dim = deform_fc_dim
 
         if not no_trans:
-            self.func_offset = DCNv2PoolingFunction(self.spatial_scale,
-                                                    self.pooled_size,
-                                                    self.output_dim,
-                                                    True,
-                                                    self.group_size,
-                                                    self.part_size,
-                                                    self.sample_per_part,
-                                                    self.trans_std)
-            self.offset_fc = nn.Sequential(
-                nn.Linear(self.pooled_size * self.pooled_size * self.output_dim, self.deform_fc_dim),
+            self.offset_mask_fc = nn.Sequential(
+                nn.Linear(self.pooled_size * self.pooled_size *
+                          self.output_dim, self.deform_fc_dim),
                 nn.ReLU(inplace=True),
                 nn.Linear(self.deform_fc_dim, self.deform_fc_dim),
                 nn.ReLU(inplace=True),
-                nn.Linear(self.deform_fc_dim, self.pooled_size * self.pooled_size * 2)
+                nn.Linear(self.deform_fc_dim, self.pooled_size *
+                          self.pooled_size * 3)
             )
-            self.offset_fc[4].weight.data.zero_()
-            self.offset_fc[4].bias.data.zero_()
-            self.mask_fc = nn.Sequential(
-                nn.Linear(self.pooled_size * self.pooled_size * self.output_dim, self.deform_fc_dim),
-                nn.ReLU(inplace=True),
-                nn.Linear(self.deform_fc_dim, self.pooled_size * self.pooled_size * 1),
-                nn.Sigmoid()
-            )
-            self.mask_fc[2].weight.data.zero_()
-            self.mask_fc[2].bias.data.zero_()
+            self.offset_mask_fc[4].weight.data.zero_()
+            self.offset_mask_fc[4].bias.data.zero_()
 
-    def forward(self, data, rois):
-        if self.no_trans:
-            offset = data.new()
-        else:
+    def forward(self, input, rois):
+        offset = input.new()
+
+        if not self.no_trans:
+
+            # do roi_align first
             n = rois.shape[0]
-            offset = data.new()
-            x = self.func_offset(data, rois, offset)
-            offset = self.offset_fc(x.view(n, -1))
-            offset = offset.view(n, 2, self.pooled_size, self.pooled_size)
-            mask = self.mask_fc(x.view(n, -1))
-            mask = mask.view(n, 1, self.pooled_size, self.pooled_size)
-            feat = self.func(data, rois, offset) * mask
-            return feat
-        return self.func(data, rois, offset)
+            roi = dcn_v2_pooling(input, rois, offset,
+                                 self.spatial_scale,
+                                 self.pooled_size,
+                                 self.output_dim,
+                                 True,  # no trans
+                                 self.group_size,
+                                 self.part_size,
+                                 self.sample_per_part,
+                                 self.trans_std)
+
+            # build mask and offset
+            offset_mask = self.offset_mask_fc(roi.view(n, -1))
+            offset_mask = offset_mask.view(
+                n, 3, self.pooled_size, self.pooled_size)
+            o1, o2, mask = torch.chunk(offset_mask, 3, dim=1)
+            offset = torch.cat((o1, o2), dim=1)
+            mask = torch.sigmoid(mask)
+
+            # do pooling with offset and mask
+            return dcn_v2_pooling(input, rois, offset,
+                                  self.spatial_scale,
+                                  self.pooled_size,
+                                  self.output_dim,
+                                  self.no_trans,
+                                  self.group_size,
+                                  self.part_size,
+                                  self.sample_per_part,
+                                  self.trans_std) * mask
+        # only roi_align
+        return dcn_v2_pooling(input, rois, offset,
+                              self.spatial_scale,
+                              self.pooled_size,
+                              self.output_dim,
+                              self.no_trans,
+                              self.group_size,
+                              self.part_size,
+                              self.sample_per_part,
+                              self.trans_std)

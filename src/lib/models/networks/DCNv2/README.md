@@ -1,4 +1,4 @@
-## Deformable Convolutional Networks V2 with Pytorch
+## Deformable Convolutional Networks V2 with Pytorch 1.0
 
 ### Build
 ```bash
@@ -37,6 +37,11 @@
                          trans_std=0.1).cuda()
 
     dout = dpooling(input, rois)
+```
+### Note
+Now the master branch is for pytorch 1.0 (new ATen API), you can switch back to pytorch 0.4 with,
+```bash
+git checkout pytorch_0.4
 ```
 
 ### Known Issues:

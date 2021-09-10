@@ -12,3 +12,4 @@
 
 \+ 😎 Read [this article]() and then download [this jupyter notebook](), to run CenterNet pre-trainded models (with diffrent backbons) on your dataset.
 
+ 

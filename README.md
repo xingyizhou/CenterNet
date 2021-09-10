@@ -10,6 +10,6 @@
 
 \- 🤯 BAAM, yes!
 
-\+ 😎 Read [this article]() and then download [this jupyter notebook](), to run CenterNet pre-trainded models (with diffrent backbons) on your dataset.
+\+ 😎 Read [this doc](https://mehrdad-dev.ir/CenterNet-Fixed-For-Colab/) and then download [this jupyter notebook](), to run CenterNet pre-trainded models (with diffrent backbons) on your dataset.
  
  

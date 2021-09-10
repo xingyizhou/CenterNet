@@ -7,6 +7,7 @@ import numpy as np
 from progress.bar import Bar
 import time
 import torch
+from random import randint
 
 try:
   from external.nms import soft_nms
@@ -88,9 +89,11 @@ class CtdetDetector(BaseDetector):
                                  img_id='out_pred_{:.1f}'.format(scale))
 
   def show_results(self, debugger, image, results):
-    debugger.add_img(image, img_id='ctdet')
+    rand_id = randint(0,99999)
+    img_id = 'ctdet'+str(rand_id)
+    debugger.add_img(image, img_id=img_id)
     for j in range(1, self.num_classes + 1):
       for bbox in results[j]:
         if bbox[4] > self.opt.vis_thresh:
-          debugger.add_coco_bbox(bbox[:4], j - 1, bbox[4], img_id='ctdet')
-    debugger.show_all_imgs(pause=self.pause)
+          debugger.add_coco_bbox(bbox[:4], j - 1, bbox[4], img_id=img_id)
+    debugger.save_all_imgs()

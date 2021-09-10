@@ -90,7 +90,7 @@ class CtdetDetector(BaseDetector):
 
   def show_results(self, debugger, image, results):
     rand_id = randint(0,99999)
-    img_id = 'ctdet'+str(rand_id)
+    img_id = 'ctdet-'+str(rand_id)
     debugger.add_img(image, img_id=img_id)
     for j in range(1, self.num_classes + 1):
       for bbox in results[j]:

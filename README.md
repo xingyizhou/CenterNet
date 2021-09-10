@@ -1,4 +1,4 @@
-Object detection, 3D detection, and pose estimation using center point detection:
+<div align=center> Object detection, 3D detection, and pose estimation using center point detection </div>
 
 ## 🛠 CenterNet Fixed For Google Colab 
 

@@ -1,4 +1,4 @@
-<p align="center">
+<p align="center" style='width: 200px, hight:100px'>
   <img src="https://github.com/mehrdad-dev/CenterNet-Fixed-For-Colab/blob/master/images/centernet-in-colab.png" alt="CenterNet Fixed For Google Colab, mehrdad mohammadian" />
 </p>
 

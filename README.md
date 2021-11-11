@@ -71,7 +71,8 @@ from the [Model zoo](readme/MODEL_ZOO.md) and put them in `CenterNet_ROOT/models
 For object detection on images/ video, run:
 
 ~~~
-python demo.py ctdet --demo /path/to/image/or/folder/or/video --load_model ../models/ctdet_coco_dla_2x.pth
+CenterNet_ROOT=/path/to/clone/CenterNet
+python $CenterNet_ROOT/src/demo.py ctdet --demo $CenterNet_ROOT/images --load_model $CenterNet_ROOT/models/ctdet_coco_dla_2x.pth
 ~~~
 We provide example images in `CenterNet_ROOT/images/` (from [Detectron](https://github.com/facebookresearch/Detectron/tree/master/demo)). If set up correctly, the output should look like
 

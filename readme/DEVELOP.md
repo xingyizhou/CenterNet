@@ -1,6 +1,6 @@
 # Develop
 
-This document provides tutorials to develop CenterNet. `lib/src/opts` lists a few more options that the current version supports.
+This document provides tutorials to develop CenterNet. `src/lib/opts` lists a few more options that the current version supports.
 
 ## New dataset
 Basically there are three steps:

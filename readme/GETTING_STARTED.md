@@ -83,7 +83,7 @@ By default, pytorch evenly splits the total batch size to each GPUs.
 `--master_batch` allows using different batchsize for the master GPU, which usually costs more memory than other GPUs.
 If it encounters GPU memory out, using slightly less batch size (e.g., `112` of `128`) with the same learning is fine.
 
-If the training is terminated before finishing, you can use the same commond with `--resume` to resume training. It will found the lastest model with the same `exp_id`.
+If the training is terminated before finishing, you can use the same commond with `--resume` to resume training. It will find the lastest model with the same `exp_id`.
 
 Our HourglassNet model is finetuned from the pretrained [ExtremeNet model](https://drive.google.com/file/d/1omiOUjWCrFbTJREypuZaODu0bOlF_7Fg/view?usp=sharing) (from the [ExtremeNet repo](https://github.com/xingyizhou/ExtremeNet)).
 You will need to download the model, run `python convert_hourglass_weight.py` to convert the model format, and load the model for training (see the [script](../experiments/ctdet_coco_hg.sh)).

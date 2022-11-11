@@ -85,5 +85,5 @@ If it encounters GPU memory out, using slightly less batch size (e.g., `112` of 
 
 If the training is terminated before finishing, you can use the same commond with `--resume` to resume training. It will found the lastest model with the same `exp_id`.
 
-Our HourglassNet model is finetuned from the pretrained [ExtremeNet model](https://drive.google.com/file/d/1omiOUjWCrFbTJREypuZaODu0bOlF_7Fg/view?usp=sharing) (from the [ExtremeNet repo](https://github.com/xingyizhou/ExtremeNet)).
+Our HourglassNet model is finetuned from the pretrained [ExtremeNet model](https://drive.google.com/file/d/1JMbHgN4uLkP9MAyJU5EeHrgxwe101hwO) (from the [ExtremeNet repo](https://github.com/xingyizhou/ExtremeNet)).
 You will need to download the model, run `python convert_hourglass_weight.py` to convert the model format, and load the model for training (see the [script](../experiments/ctdet_coco_hg.sh)).

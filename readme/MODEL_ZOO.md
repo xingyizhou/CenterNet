@@ -5,7 +5,7 @@
 - The experiments are run with pytorch 0.4.1, CUDA 9.0, and CUDNN 7.1.
 - Training times are measured on our servers with 8 TITAN V GPUs (12 GB Memeory).
 - Testing times are measured on our local machine with TITAN Xp GPU. 
-- The models can be downloaded directly from [Google drive](https://drive.google.com/open?id=1px-Xg7jXSC79QqgsD1AAGJQkuf5m0zh_).
+- The models can be downloaded directly from [Google drive](https://drive.google.com/drive/folders/1S3NnppRgXea_IG4WeyquJcnOB3I6G-LX).
 
 ## Object Detection
 
@@ -14,13 +14,13 @@
 
 | Model                    | GPUs |Train time(h)| Test time (ms) |   AP               |  Download | 
 |--------------------------|------|-------------|----------------|--------------------|-----------|
-|[ctdet\_coco\_hg](../experiments/ctdet_coco_hg.sh)       |   5  |109          | 71 / 129 / 674 | 40.3 / 42.2 / 45.1 | [model](https://drive.google.com/open?id=1cNyDmyorOduMRsgXoUnuyUiF6tZNFxaG) |
-|[ctdet\_coco\_dla\_1x](../experiments/ctdet_coco_dla_1x.sh)  |   8  | 57          |  19 / 36 / 248 | 36.3 / 38.2 / 40.7 | [model](https://drive.google.com/open?id=1r89_KNXyDyvUp8NggduG9uKQTMU2DsK_) |
-|[ctdet\_coco\_dla\_2x](../experiments/ctdet_coco_dla_2x.sh)  |   8  | 92          |  19 / 36 / 248 | 37.4 / 39.2 / 41.7 | [model](https://drive.google.com/open?id=1pl_-ael8wERdUREEnaIfqOV_VF2bEVRT) |
-|[ctdet\_coco\_resdcn101](../experiments/ctdet_coco_resdcn101.sh)|   8  | 65          |  22 / 40 / 259 | 34.6 / 36.2 / 39.3 | [model](https://drive.google.com/open?id=1bTJCbAc1szA9lWU-fvVw52lqR3U2TTry) |
-|[ctdet\_coco\_resdcn18](../experiments/ctdet_coco_resdcn18.sh) |   4  | 28          |  7 / 14 / 81   | 28.1 / 30.0 / 33.2 | [model](https://drive.google.com/open?id=1b-_sjq1Pe_dVxt5SeFmoadMfiPTPZqpz) |
-|[exdet\_coco\_hg](../experiments/exdet_coco_hg.sh)       |   5  |215          | 134 / 246/1340 | 35.8 / 39.8 / 42.4 | [model](https://drive.google.com/open?id=1-5bT5ZF8bXriJ-wAvOjJFrBLvZV2-mlV) |
-|[exdet\_coco\_dla](../experiments/exdet_coco_dla.sh)      |   8  |133          | 51 / 90 / 481  | 33.0 / 36.5 / 38.5 | [model](https://drive.google.com/open?id=1PFcEqN0KjFuq9XaqzB7TkVD3pvXZx04e) |
+|[ctdet\_coco\_hg](../experiments/ctdet_coco_hg.sh)       |   5  |109          | 71 / 129 / 674 | 40.3 / 42.2 / 45.1 | [model](https://drive.google.com/file/d/13F904yXltGIqa_K3g3-FLleaNX0n7c9O) |
+|[ctdet\_coco\_dla\_1x](../experiments/ctdet_coco_dla_1x.sh)  |   8  | 57          |  19 / 36 / 248 | 36.3 / 38.2 / 40.7 | [model](https://drive.google.com/file/d/1xqFsdA3DANMq1MfnXG8n7nQPe4AfXTHv) |
+|[ctdet\_coco\_dla\_2x](../experiments/ctdet_coco_dla_2x.sh)  |   8  | 92          |  19 / 36 / 248 | 37.4 / 39.2 / 41.7 | [model](https://drive.google.com/file/d/18Q3fzzAsha_3Qid6mn4jcIFPeOGUaj1d) |
+|[ctdet\_coco\_resdcn101](../experiments/ctdet_coco_resdcn101.sh)|   8  | 65          |  22 / 40 / 259 | 34.6 / 36.2 / 39.3 | [model](https://drive.google.com/file/d/1tKkSyzC3iWmM6XTYNJrC4XLCIToDmnHz) |
+|[ctdet\_coco\_resdcn18](../experiments/ctdet_coco_resdcn18.sh) |   4  | 28          |  7 / 14 / 81   | 28.1 / 30.0 / 33.2 | [model](https://drive.google.com/file/d/1RtFps3kQAyLjQyzCao7pPDclOBQ64Vyp) |
+|[exdet\_coco\_hg](../experiments/exdet_coco_hg.sh)       |   5  |215          | 134 / 246/1340 | 35.8 / 39.8 / 42.4 | [model](https://drive.google.com/file/d/1gf9bVWs9htzOaQiAF_mqaa2SCFTvwNvh) |
+|[exdet\_coco\_dla](../experiments/exdet_coco_dla.sh)      |   8  |133          | 51 / 90 / 481  | 33.0 / 36.5 / 38.5 | [model](https://drive.google.com/file/d/1RtFps3kQAyLjQyzCao7pPDclOBQ64Vyp) |
 
 #### Notes
 
@@ -37,12 +37,12 @@
 
 | Model                           |GPUs| Train time (h)| Test time (ms) | mAP  | Download  |
 |---------------------------------|----|---------------|----------------|------|-----------|
-|[ctdet\_pascal\_dla\_384](../experiments/ctdet_pascal_dla_384.sh)      | 1  |15             | 20             | 79.3 | [model](https://drive.google.com/open?id=1IC3FZkxAQHm2rxoIGmS4YluYpZxwYkJf) |
-|[ctdet\_pascal\_dla\_512](../experiments/ctdet_pascal_dla_512.sh)      | 2  |15             | 30             | 80.7 | [model](https://drive.google.com/open?id=1jIfK9EyqzNcupxGsp3YRnEiewrIG4_Ma) |
-|[ctdet\_pascal\_resdcn18\_384](../experiments/ctdet_pascal_resdcn18_384.sh) | 1  |3              | 7              | 72.6 | [model](https://drive.google.com/open?id=1Kq27D1uoPZK42j2alDWmCGyqRU2ob1BX) |
-|[ctdet\_pascal\_resdcn18\_512](../experiments/ctdet_pascal_resdcn18_512.sh) | 1  |5              | 10             | 75.7 | [model](https://drive.google.com/open?id=1MRUJTTJ4-ZDN0Y-zQOqQBqjrQMcXFzet) |
-|[ctdet\_pascal\_resdcn101\_384](../experiments/ctdet_pascal_resdcn101_384.sh)| 2  |7              | 22             | 77.1 | [model](https://drive.google.com/open?id=11YXE04zILuXA5-kaYQEEg0ljNKBe6GPO) |
-|[ctdet\_pascal\_resdcn101\_512](../experiments/ctdet_pascal_resdcn101_512.sh)| 4  |7              | 33             | 78.7 | [model](https://drive.google.com/open?id=1xhEf-a_y2Di6YdyPpCIj0-kVFjQvDf9N) |
+|[ctdet\_pascal\_dla\_384](../experiments/ctdet_pascal_dla_384.sh)      | 1  |15             | 20             | 79.3 | [model](https://drive.google.com/file/d/19J7WoUZKYiSEU7vrhZInz5C2m0-9zmC1) |
+|[ctdet\_pascal\_dla\_512](../experiments/ctdet_pascal_dla_512.sh)      | 2  |15             | 30             | 80.7 | [model](https://drive.google.com/file/d/1Iqqr_VLtG8T3tUzy-EuMaeuCtFuv6pEU) |
+|[ctdet\_pascal\_resdcn18\_384](../experiments/ctdet_pascal_resdcn18_384.sh) | 1  |3              | 7              | 72.6 | [model](https://drive.google.com/file/d/1mpeslWUt0aJqx99_-UcCzJ7GBcD6sCA-) |
+|[ctdet\_pascal\_resdcn18\_512](../experiments/ctdet_pascal_resdcn18_512.sh) | 1  |5              | 10             | 75.7 | [model](https://drive.google.com/file/d/1ILnmGrJQiDK2Ib-D7TzBs2fq5bfju-Bd) |
+|[ctdet\_pascal\_resdcn101\_384](../experiments/ctdet_pascal_resdcn101_384.sh)| 2  |7              | 22             | 77.1 | [model](https://drive.google.com/file/d/1-Qy4zMhzmBk9fMF0u2s5zNI0Uj9latsk) |
+|[ctdet\_pascal\_resdcn101\_512](../experiments/ctdet_pascal_resdcn101_512.sh)| 4  |7              | 33             | 78.7 | [model](https://drive.google.com/file/d/1TiJkPaofzUaEMLi5wr9TIIUY8G2VewCQ) |
 
 #### Notes
 - All models are trained on trainval 07+12 and tested on test 2007.
@@ -56,10 +56,10 @@
 
 | Model                    | GPUs |Train time(h)| Test time (ms) |   AP        |  Download | 
 |--------------------------|------|-------------|----------------|-------------|-----------|
-|[multi\_pose\_hg_1x](../experiments/multi_pose_hg_1x.sh)    |   5  |62           | 151            | 58.7        | [model](https://drive.google.com/open?id=1HBB5KRaSj-m-vtpGESm7_3evNP5Y84RS) |
-|[multi\_pose\_hg_3x](../experiments/multi_pose_hg_3x.sh)    |   5  |188          | 151            | 64.0        | [model](https://drive.google.com/open?id=1n6EvwhTbz7LglVXXlL9irJia7YuakHdB) |
-|[multi\_pose\_dla_1x](../experiments/multi_pose_dla_1x.sh)   |   8  |30           | 44             | 54.7        | [model](https://drive.google.com/open?id=1VeiRtuXfCbmhQNGV-XWL6elUzpuWN-4K) |
-|[multi\_pose\_dla_3x](../experiments/multi_pose_dla_3x.sh)   |   8  |70           | 44             | 58.9        | [model](https://drive.google.com/open?id=1PO1Ax_GDtjiemEmDVD7oPWwqQkUu28PI) |
+|[multi\_pose\_hg_1x](../experiments/multi_pose_hg_1x.sh)    |   5  |62           | 151            | 58.7        | [model](https://drive.google.com/file/d/1neg1zfVjRTS45FCdk5hgIV-TxJ0McAew) |
+|[multi\_pose\_hg_3x](../experiments/multi_pose_hg_3x.sh)    |   5  |188          | 151            | 64.0        | [model](https://drive.google.com/file/d/17-YS11iguOQKwPPHUg8LzakLzrgKSLfA) |
+|[multi\_pose\_dla_1x](../experiments/multi_pose_dla_1x.sh)   |   8  |30           | 44             | 54.7        | [model](https://drive.google.com/file/d/1WKqVdkIew43SxLTSxi81a-_f4Q9v2Fx5) |
+|[multi\_pose\_dla_3x](../experiments/multi_pose_dla_3x.sh)   |   8  |70           | 44             | 58.9        | [model](https://drive.google.com/file/d/1mC2PAQT_RuHi_9ZMZgkt4rg7BSY2_Lkd) |
 
 #### Notes
 - All models are trained on keypoint train 2017 images which contains at least one human with keypoint annotations (64115 images).
@@ -80,10 +80,10 @@
 
 |Model       |GPUs|Train time|Test time|AP-E|AP-M|AP-H|AOS-E|AOS-M|AOS-H|BEV-E|BEV-M|BEV-H| Download |
 |------------|----|----------|---------|----|----|----|-----|-----|-----|-----|-----|-----|----------|
-|[ddd_3dop](../experiments/ddd_3dop.sh)|2   | 7h       |  31ms   |96.9|87.8|79.2|93.9 |84.3 |75.7 |34.0 |30.5 |26.8 | [model](https://drive.google.com/open?id=1znsM6E-aVTkATreDuUVxoU0ajL1az8rz)|
+|[ddd_3dop](../experiments/ddd_3dop.sh)|2   | 7h       |  31ms   |96.9|87.8|79.2|93.9 |84.3 |75.7 |34.0 |30.5 |26.8 | [model](https://drive.google.com/file/d/1LrAzVJqlZECVuyr_NJI_4xd88mA1fL5b)|
 
 ### KITTI SubCNN split
 
 |Model       |GPUs|Train time|Test time|AP-E|AP-M|AP-H|AOS-E|AOS-M|AOS-H|BEV-E|BEV-M|BEV-H| Download |
 |------------|----|----------|---------|----|----|----|-----|-----|-----|-----|-----|-----|----------|
-|[ddd_sub](../experiments/ddd_sub.sh) |2   | 7h       |  31ms   |89.6|79.8|70.3|85.7 |75.2 |65.9 |34.9 |27.7 |26.4 | [model](https://drive.google.com/open?id=15XuJxTxCBnA8O37M_ghjppnWmVnjC0Hp)|
+|[ddd_sub](../experiments/ddd_sub.sh) |2   | 7h       |  31ms   |89.6|79.8|70.3|85.7 |75.2 |65.9 |34.9 |27.7 |26.4 | [model](https://drive.google.com/file/d/1ZUsUqrM_yTjxaJuDBxm0WTKXj1snVuvP)|

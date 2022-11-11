@@ -6,7 +6,7 @@ Object detection, 3D detection, and pose estimation using center point detection
 > *arXiv technical report ([arXiv 1904.07850](http://arxiv.org/abs/1904.07850))*         
 
 
-Contact: [zhouxy@cs.utexas.edu](mailto:zhouxy@cs.utexas.edu). Any questions or discussions are welcomed! 
+Contact: [zhouxy2017@gmail.com](mailto:zhouxy2017@gmail.com). Any questions or discussions are welcomed! 
 
 ## Updates
 
@@ -64,8 +64,8 @@ Please refer to [INSTALL.md](readme/INSTALL.md) for installation instructions.
 
 We support demo for image/ image folder, video, and webcam. 
 
-First, download the models (By default, [ctdet_coco_dla_2x](https://drive.google.com/open?id=1pl_-ael8wERdUREEnaIfqOV_VF2bEVRT) for detection and 
-[multi_pose_dla_3x](https://drive.google.com/open?id=1PO1Ax_GDtjiemEmDVD7oPWwqQkUu28PI) for human pose estimation) 
+First, download the models (By default, [ctdet_coco_dla_2x](https://drive.google.com/file/d/18Q3fzzAsha_3Qid6mn4jcIFPeOGUaj1d) for detection and 
+[multi_pose_dla_3x](https://drive.google.com/file/d/1mC2PAQT_RuHi_9ZMZgkt4rg7BSY2_Lkd) for human pose estimation) 
 from the [Model zoo](readme/MODEL_ZOO.md) and put them in `CenterNet_ROOT/models/`.
 
 For object detection on images/ video, run:

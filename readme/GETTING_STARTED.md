@@ -32,7 +32,7 @@ python test.py multi_pose --exp_id dla --keep_res --load_model ../models/multi_p
 and the following for hourglass
 
 ~~~
-python test.py multi_pose --exp_id hg --arch hourglass --keep_res --load_model ../models/multi_pose_dla_3x.pth --flip_test
+python test.py multi_pose --exp_id hg --arch hourglass --keep_res --load_model ../models/multi_pose_hg_3x.pth --flip_test
 ~~~
 
 The expected results can be found in the model zoo.

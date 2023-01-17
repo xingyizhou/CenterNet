@@ -54,6 +54,7 @@ After install Anaconda:
 4. Install the requirements
 
     ~~~
+    cd $CenterNet_ROOT
     pip install -r requirements.txt
     ~~~
     

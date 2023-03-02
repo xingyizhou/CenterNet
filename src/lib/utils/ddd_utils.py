@@ -54,13 +54,13 @@ def draw_box_3d(image, corners, c=(0, 0, 255)):
   for ind_f in range(3, -1, -1):
     f = face_idx[ind_f]
     for j in range(4):
-      cv2.line(image, (corners[f[j], 0], corners[f[j], 1]),
-               (corners[f[(j+1)%4], 0], corners[f[(j+1)%4], 1]), c, 2, lineType=cv2.LINE_AA)
+      cv2.line(image, (int(corners[f[j], 0]), int(corners[f[j], 1])),
+               (int(corners[f[(j+1)%4], 0]), int(corners[f[(j+1)%4], 1])), c, 2, lineType=cv2.LINE_AA)
     if ind_f == 0:
-      cv2.line(image, (corners[f[0], 0], corners[f[0], 1]),
-               (corners[f[2], 0], corners[f[2], 1]), c, 1, lineType=cv2.LINE_AA)
-      cv2.line(image, (corners[f[1], 0], corners[f[1], 1]),
-               (corners[f[3], 0], corners[f[3], 1]), c, 1, lineType=cv2.LINE_AA)
+      cv2.line(image, (int(corners[f[0], 0]), int(corners[f[0], 1])),
+               (int(corners[f[2], 0]), int(corners[f[2], 1])), c, 1, lineType=cv2.LINE_AA)
+      cv2.line(image, (int(corners[f[1], 0]), int(corners[f[1], 1])),
+               (int(corners[f[3], 0]), int(corners[f[3], 1])), c, 1, lineType=cv2.LINE_AA)
   return image
 
 def unproject_2d_to_3d(pt_2d, depth, P):

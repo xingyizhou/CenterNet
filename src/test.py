@@ -33,8 +33,8 @@ class PrefetchDataset(torch.utils.data.Dataset):
     img_path = os.path.join(self.img_dir, img_info['file_name'])
     image = cv2.imread(img_path)
     images, meta = {}, {}
-    for scale in opt.test_scales:
-      if opt.task == 'ddd':
+    for scale in self.opt.test_scales:
+      if self.opt.task == 'ddd':
         images[scale], meta[scale] = self.pre_process_func(
           image, scale, img_info['calib'])
       else:
